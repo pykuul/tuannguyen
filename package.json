@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon server/app.js",
     "build": "NODE_ENV=production next build",
-    "start": "NODE_ENV=production nodemon server/app.js",
+    "start": "NODE_ENV=production node server/app.js",
     "heroku-postbuild": "npm run build"
   },
   "keywords": [],
