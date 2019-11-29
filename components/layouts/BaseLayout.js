@@ -1,11 +1,15 @@
+import Head from "next/head";
 // import shared components
-import Header from '../shared/Header';
+import Header from "../layouts/Header";
 
-const BaseLayout = (props) => {
-
+const BaseLayout = props => {
   return (
     <>
-      <Header />  
+      <Head>
+        <title>{props.title}</title>
+        <meta name="description" content={props.description} />
+      </Head>
+      <Header />
       {props.children}
     </>
   );

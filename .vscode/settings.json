@@ -1,0 +1,7 @@
+{
+  "window.zoomLevel": -0.1,
+  "files.autoSave": "afterDelay",
+  "eslint.autoFixOnSave": true,
+  "files.autoSaveDelay": 30000,
+  "editor.formatOnSave": true
+}
