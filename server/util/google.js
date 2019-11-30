@@ -46,7 +46,6 @@ function auth({ ROOT_URL, server }) {
   // 3. serialize user AND
   passport.serializeUser((user, done) => {
     done(null, user.id);
-    console.log("serializeUser", id);
   });
   // deserialize user;
   passport.deserializeUser((id, done) => {
