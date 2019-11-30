@@ -14,20 +14,6 @@ Router.onRouteChangeComplete = () => NProgress.done();
 Router.onRouteChangeError = () => NProgress.done();
 
 class MyApp extends App {
-  static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
-    try {
-      if (Component.getInitialProps) {
-        Object.assign(pageProps, await Component.getInitialProps(ctx));
-      }
-    } catch (err) {
-      console.error(err);
-    }
-
-    // console.log(papeProps);
-    return { pageProps };
-  }
-
   componentDidMount() {
     // remove the server-side injected CSS
     const jssStyles = document.querySelector("#jss-server-side");

@@ -23,7 +23,9 @@ mongoose.connect(MONGO_URL, options);
 
 // start the server
 const port = process.env.PORT || 3000;
-const ROOT_URL = `http://localhost:${port}`;
+const ROOT_URL = dev
+  ? `http://localhost:${port}`
+  : "https://richardnguyen.herokuapp.com";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
@@ -61,7 +63,7 @@ app
     // server listen handling
     server.listen(port, err => {
       if (err) throw err;
-      console.log(`>Ready on server port: ${port}`);
+      console.log(`>Ready on ${ROOT_URL} at port: ${port}`);
     });
   })
   .catch(ex => {
