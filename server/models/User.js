@@ -88,6 +88,7 @@ class UserClass {
     }
 
     const slug = await generateSlug(this, displayName);
+    // Đếm xem trong database hiện tại có bao nhiêu user?
     const userCount = await this.find().countDocuments();
 
     const newUser = await this.create({

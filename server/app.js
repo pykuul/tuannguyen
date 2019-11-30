@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const mongoSessionStore = require("connect-mongo");
 
-require("dotenv").config();
+const auth = require("./util/google");
 
-const User = require("./models/User");
+require("dotenv").config();
 
 const dev = process.env.NODE_ENV !== "production";
 // connect Database
@@ -23,6 +23,7 @@ mongoose.connect(MONGO_URL, options);
 
 // start the server
 const port = process.env.PORT || 3000;
+const ROOT_URL = `http://localhost:${port}`;
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
@@ -50,19 +51,9 @@ app
     };
 
     server.use(session(sess));
+    auth({ server, ROOT_URL });
 
     // routes handlling
-    server.get("/", (req, res) => {
-      User.findOne({ slug: "team-builder-book" })
-        .then(user => {
-          req.user = user;
-          app.render(req, res, "/");
-        })
-        .catch(err => {
-          app.render(req, res, "/", { error: err });
-        });
-    });
-
     server.get("*", (req, res) => {
       return handle(req, res);
     });

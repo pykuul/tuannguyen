@@ -1,18 +1,17 @@
-import React, { Component } from "react";
+import Head from "next/head";
 // import components
-import BaseLayout from "../components/layouts/BaseLayout";
 
-class Cv extends Component {
-  render() {
-    return (
-      <BaseLayout
-        title="My CV page"
-        description="This is the description of the CV page"
-      >
-        <h1>I am CV Page</h1>
-      </BaseLayout>
-    );
-  }
-}
+const Cv = () => {
+  return (
+    <div style={{ textAlign: "center", margin: "0 20px" }}>
+      <Head>
+        <title>My Cv</title>
+        <meta name="description" content="My CV details" />
+      </Head>
+      <br />
+      <p>this is Cv Page</p>
+    </div>
+  );
+};
 
 export default Cv;

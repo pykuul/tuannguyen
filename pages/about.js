@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import Head from "next/head";
 // import components
-import BaseLayout from '../components/layouts/BaseLayout';
 
-class About extends Component {
-
-  render() {
-
-    return (
-      <BaseLayout>
-        <h1>This is About page</h1>
-      </BaseLayout>
-    );
-  }
+const About = () => {
+  return (
+    <div style={{ textAlign: "center", margin: "0 20px" }}>
+      <Head>
+        <title>About page</title>
+        <meta name="description" content="this is about page" />
+      </Head>
+      <br />
+      <p>this is About Page</p>
+    </div>
+  );
 };
 
 export default About;

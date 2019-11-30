@@ -1,27 +1,17 @@
-import React, { Component } from 'react';
-import { withRouter } from 'next/router';
+import Head from "next/head";
 // import components
-import BaseLayout from '../../components/layouts/BaseLayout';
 
-class Portfolio extends Component {
+const Portfolio = () => {
+  return (
+    <div style={{ textAlign: "center", margin: "0 20px" }}>
+      <Head>
+        <title>Portfolio Details</title>
+        <meta name="description" content="My portfolio details" />
+      </Head>
+      <br />
+      <p>this is Portfolio details Page</p>
+    </div>
+  );
+};
 
-  render() {
-    // debugger;
-    let title = this.props.router.query.title;
-
-    const titleRender = title ? (
-      <>
-        <h1>{title.split('-').join(' ')}</h1>
-        <p>This is the post content.</p>
-      </>
-    ) : (<h2>loading ... </h2>)
-  
-    return (
-      <BaseLayout>
-        {titleRender}
-      </BaseLayout>
-    ) 
-  }
-}
-
-export default withRouter(Portfolio);
+export default Portfolio;
