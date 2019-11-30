@@ -56,6 +56,10 @@ app
     auth({ server, ROOT_URL });
 
     // routes handlling
+    server.get("/cronjob", (req, res) => {
+      res.status(200).send("I am OK");
+    });
+
     server.get("*", (req, res) => {
       return handle(req, res);
     });
