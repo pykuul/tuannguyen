@@ -6,7 +6,7 @@ import { ServerStyleSheets } from "@material-ui/core/styles";
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang="en" style={{height: '100%'}}>
         <Head>
           {/* 1. Metadata here */}
           <meta charSet="utf-8" />
@@ -84,7 +84,8 @@ class MyDocument extends Document {
             margin: "0px auto",
             fontWeight: "300",
             lineHeight: "1.5em",
-            backgroundColor: "#F7F9FC"
+            backgroundColor: "#F7F9FC",
+            minHeight: '100%'
           }}
         >
           <Main />

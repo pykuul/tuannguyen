@@ -4,6 +4,10 @@ const generateSlug = require("../util/slugify");
 
 const { Schema } = mongoose;
 
+mongoose.set("useFindAndModify", false);
+mongoose.set("useCreateIndex", true);
+mongoose.set("useNewUrlParser", true);
+
 const userSchema = new Schema({
   googleId: {
     type: String,
@@ -66,7 +70,7 @@ class UserClass {
     avatarUrl
   }) {
     const user = await this.findOne({ googleId }).select(
-      UserClass.publicFieds().join(" ")
+      UserClass.publicFields().join(" ")
     );
     if (user) {
       const modifier = {};

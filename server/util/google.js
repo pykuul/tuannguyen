@@ -46,11 +46,13 @@ function auth({ ROOT_URL, server }) {
   // 3. serialize user AND
   passport.serializeUser((user, done) => {
     done(null, user.id);
+    console.log("serializeUser", id);
   });
   // deserialize user;
   passport.deserializeUser((id, done) => {
     User.findById(id, User.publicFields(), (err, user) => {
       done(err, user);
+      console.log("deserializeUser", id);
     });
   });
   // 4. initial passport AND
@@ -60,7 +62,10 @@ function auth({ ROOT_URL, server }) {
   // Express routes for login and sign up google
   server.get(
     "/auth/google",
-    passport.authenticate("google", { scope: ["profile"] })
+    passport.authenticate("google", {
+      scope: ["profile", "email"],
+      prompt: "select_account"
+    })
   );
 
   server.get(
