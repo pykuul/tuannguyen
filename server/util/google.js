@@ -3,7 +3,7 @@ const Strategy = require("passport-google-oauth").OAuth2Strategy;
 const User = require("../models/User");
 
 function auth({ ROOT_URL, server }) {
-  // 1. define `verify` function: get profile and googleToken from Google
+  // TODO: 1. define `verify` function: get profile and googleToken from Google
   const verify = async (accessToken, refreshToken, profile, verified) => {
     let email, avatarUrl;
 
@@ -14,7 +14,7 @@ function auth({ ROOT_URL, server }) {
     if (profile.photos && profile.photos.length > 0) {
       avatarUrl = profile.photos[0].value.replace("sz=50", "sz=128");
     }
-    // 2. call and wait for static method `signInOrSignUp` to return user
+    // TODO: 2. call and wait for static method `signInOrSignUp` to return user
     try {
       const user = await User.signInOrSignUp({
         googleId: profile.id,
@@ -43,7 +43,7 @@ function auth({ ROOT_URL, server }) {
       verify
     )
   );
-  // 3. serialize user AND
+  // TODO: 3. serialize user AND
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
@@ -54,11 +54,11 @@ function auth({ ROOT_URL, server }) {
       console.log("deserializeUser", id);
     });
   });
-  // 4. initial passport AND
+  // TODO: 4. initial passport AND
   server.use(passport.initialize());
   // save session to keep user logged in (via browser cookie);
   server.use(passport.session());
-  // Express routes for login and sign up google
+  // Express routing for login and sign up by using google
   server.get(
     "/auth/google",
     passport.authenticate("google", {

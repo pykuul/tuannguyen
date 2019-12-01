@@ -9,7 +9,10 @@ const auth = require("./util/google");
 require("dotenv").config();
 
 const dev = process.env.NODE_ENV !== "production";
-// connect Database
+const port = process.env.PORT || 3000;
+const ROOT_URL = dev
+  ? `http://localhost:${port}`
+  : "https://richardnguyen.herokuapp.com";
 const MONGO_URL = process.env.MONGO_URL;
 
 const options = {
@@ -18,14 +21,10 @@ const options = {
   useCreateIndex: true,
   useFindAndModify: false
 };
-
+// connect to Database
 mongoose.connect(MONGO_URL, options);
 
 // start the server
-const port = process.env.PORT || 3000;
-const ROOT_URL = dev
-  ? `http://localhost:${port}`
-  : "https://richardnguyen.herokuapp.com";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
@@ -38,33 +37,37 @@ app
     const MongoStore = mongoSessionStore(session);
 
     const sess = {
-      name: "builderBook.sid",
+      name: "richardnguyen.com.sid",
       secret: "HD2w.)q*VqRT4/#NK2M/,E^B)}FED5fWU!dKe[wk",
       store: new MongoStore({
         mongooseConnection: mongoose.connection,
-        ttl: 14 * 24 * 60 * 60 // save session on 14 days
+        ttl: 7 * 24 * 60 * 60 // save session on 7 days
       }),
       resave: false,
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
+        Secure: true,
         maxAge: 14 * 24 * 60 * 60 * 1000
       }
     };
 
     server.use(session(sess));
-    auth({ server, ROOT_URL });
-
-    // routes handlling
+    // routing handlling
+    // this route is served only for cronjob to keep heroku not run to sleep
     server.get("/cronjob", (req, res) => {
       res.status(200).send("I am OK");
     });
 
+    // route for google authentication
+    auth({ server, ROOT_URL });
+
+    // this is to forward all the others routes to nextJS handle
     server.get("*", (req, res) => {
       return handle(req, res);
     });
 
-    // server listen handling
+    // start server listen the requrests
     server.listen(port, err => {
       if (err) throw err;
       console.log(`>Ready on ${ROOT_URL} at port: ${port}`);
