@@ -1,8 +1,11 @@
 import React from "react";
 import Head from "next/head";
 import PropTypes from "prop-types";
+// import MUI
+import Button from "@material-ui/core/Button";
 // import components
 import withAuth from "../components/util/withAuth";
+import notify from "../components/util/notifier";
 
 class Index extends React.Component {
   static propTypes = {
@@ -27,6 +30,10 @@ class Index extends React.Component {
         </Head>
         <p>Dashboard</p>
         {user && user.email ? <p>Email: {user.email}</p> : null}
+
+        <Button variant="contained" onClick={() => notify("success message")}>
+          Click me to test notify()
+        </Button>
       </div>
     );
   }

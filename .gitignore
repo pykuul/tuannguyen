@@ -1,6 +1,11 @@
 node_modules/
 .env
-.next/
-/server/.next
-/server/config/dev.js
+.next
+.coverage
 *.log
+test/
+.build/*
+.vscode/
+.directory
+assignment.txt
+package-lock.json

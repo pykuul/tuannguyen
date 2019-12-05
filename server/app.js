@@ -5,6 +5,9 @@ const session = require("express-session");
 const mongoSessionStore = require("connect-mongo");
 
 const auth = require("./util/google");
+const logger = require("./logs");
+
+const { insertTemplates } = require("./models/EmailTemplate");
 
 require("dotenv").config();
 
@@ -30,7 +33,7 @@ const handle = app.getRequestHandler();
 
 app
   .prepare()
-  .then(() => {
+  .then(async () => {
     const server = express();
 
     // session handling
@@ -53,6 +56,9 @@ app
     };
 
     server.use(session(sess));
+
+    await insertTemplates();
+
     // routing handlling
     // this route is served only for cronjob to keep heroku not run to sleep
     server.get("/cronjob", (req, res) => {
@@ -70,9 +76,9 @@ app
     // start server listen the requrests
     server.listen(port, err => {
       if (err) throw err;
-      console.log(`>Ready on ${ROOT_URL} at port: ${port}`);
+      logger.info(`>Ready on ${ROOT_URL} at port: ${port}`);
     });
   })
   .catch(ex => {
-    console.error(ex.stack);
+    logger.error(ex.stack);
   });

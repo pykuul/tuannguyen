@@ -13,7 +13,7 @@ const MockUser = {
 
 describe("slugify", () => {
   test("no duplication", () => {
-    expect.assertion(1);
+    expect.assertions(1);
 
     return generateSlug(MockUser, "John Jonhson.").then(slug => {
       expect(slug).toBe("john-jonhson");
@@ -21,7 +21,7 @@ describe("slugify", () => {
   });
 
   test("one duplication", () => {
-    expect.assertion(1);
+    expect.assertions(1);
 
     return generateSlug(MockUser, "John.").then(slug => {
       expect(slug).toBe("john-1");
@@ -29,7 +29,7 @@ describe("slugify", () => {
   });
 
   test("multiple duplication", () => {
-    expect.assertion(1);
+    expect.assertions(1);
 
     return generateSlug(MockUser, "John Jonhson Jr.").then(slug => {
       expect(slug).toBe("john-jonhson-jr-2");
