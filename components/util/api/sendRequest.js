@@ -1,7 +1,10 @@
 import "isomorphic-unfetch";
 
+const dev = process.env.NODE_ENV !== "production";
 const port = process.env.PORT || 3000;
-const ROOT_URL = process.env.ROOT_URL || `http://localhost:${port}`;
+const ROOT_URL = dev
+  ? `http://localhost:${port}`
+  : "https://richardnguyen.herokuapp.com";
 
 export default async function sendRequest(path, opts = {}) {
   // define headers
