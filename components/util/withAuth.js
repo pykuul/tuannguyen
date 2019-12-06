@@ -20,26 +20,6 @@ function withAuth(
 
     static defaultProps = { user: null };
 
-    // mount data before rendering
-    componentDidMount() {
-      const { user, isFromServer } = this.props;
-
-      if (isFromServer) {
-        globalUser = user;
-      }
-
-      // Redirect to "/login" if login is required and not logged in
-      if (loginRequired && !logoutRequired && !user) {
-        Router.push("/login");
-        return;
-      }
-
-      // if logout is required and user logged in, redirect to '/' page
-      if (logoutRequired && user) {
-        Router.push("/");
-      }
-    }
-
     // get data from server side rendering
     static async getInitialProps(ctx) {
       const isFromServer = !!ctx.req;
@@ -60,6 +40,26 @@ function withAuth(
       }
 
       return props;
+    }
+
+    // mount data before rendering
+    componentDidMount() {
+      const { user, isFromServer } = this.props;
+
+      if (isFromServer) {
+        globalUser = user;
+      }
+
+      // Redirect to "/login" if login is required and not logged in
+      if (loginRequired && !logoutRequired && !user) {
+        Router.push("/login");
+        return;
+      }
+
+      // if logout is required and user logged in, redirect to '/' page
+      if (logoutRequired && user) {
+        Router.push("/");
+      }
     }
 
     render() {

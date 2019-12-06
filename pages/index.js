@@ -30,10 +30,6 @@ class Index extends React.Component {
         </Head>
         <p>Dashboard</p>
         {user && user.email ? <p>Email: {user.email}</p> : null}
-
-        <Button variant="contained" onClick={() => notify("success message")}>
-          Click me to test notify()
-        </Button>
       </div>
     );
   }

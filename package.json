@@ -27,6 +27,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "googleapi": "^1.0.2",
+    "isomorphic-unfetch": "^3.0.0",
     "jest": "^24.9.0",
     "lodash": "^4.17.15",
     "mongoose": "^5.7.12",

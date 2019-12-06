@@ -5,18 +5,19 @@ const session = require("express-session");
 const mongoSessionStore = require("connect-mongo");
 
 const auth = require("./util/google");
+const api = require("./api");
 const logger = require("./logs");
-
 const { insertTemplates } = require("./models/EmailTemplate");
 
 require("dotenv").config();
-
 const dev = process.env.NODE_ENV !== "production";
 const port = process.env.PORT || 3000;
+const MONGO_URL = process.env.MONGO_URL;
 const ROOT_URL = dev
   ? `http://localhost:${port}`
   : "https://richardnguyen.herokuapp.com";
-const MONGO_URL = process.env.MONGO_URL;
+
+module.exports = { dev, port, ROOT_URL, MONGO_URL };
 
 const options = {
   useNewUrlParser: true,
@@ -59,7 +60,15 @@ app
 
     await insertTemplates();
 
-    // routing handlling
+    const URL_MAP = {
+      "/login": "/public/login",
+      "/about": "/public/about",
+      "/blogs": "/public/blogs",
+      "/cv": "/public/cv",
+      "/portfolios": "/public/portfolios"
+    };
+
+    // routing handling
     // this route is served only for cronjob to keep heroku not run to sleep
     server.get("/cronjob", (req, res) => {
       res.status(200).send("I am OK");
@@ -68,9 +77,18 @@ app
     // route for google authentication
     auth({ server, ROOT_URL });
 
+    // api endpoint handling
+    api(server);
+
     // this is to forward all the others routes to nextJS handle
     server.get("*", (req, res) => {
-      return handle(req, res);
+      const url = URL_MAP[req.path];
+
+      if (url) {
+        return app.render(req, res, url);
+      } else {
+        return handle(req, res);
+      }
     });
 
     // start server listen the requrests

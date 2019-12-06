@@ -71,8 +71,8 @@ function auth({ ROOT_URL, server }) {
     "/oauth2callback",
     passport.authenticate("google", { failureRedirect: "/login" }),
     function(req, res) {
-      // Successful authentication, redirect home.
-      res.redirect("/");
+      // Successful authentication, redirect admin.
+      res.redirect("/admin");
     }
   );
 
