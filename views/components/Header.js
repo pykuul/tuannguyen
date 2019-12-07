@@ -9,7 +9,7 @@ import Avatar from "@material-ui/core/Avatar";
 import MenuDrop from "./MenuDrop";
 // import Link from "./Link";
 // import style css
-import { styleToolbar } from "../util/SharedStyles";
+import { styleToolbar } from "../styled/SharedStyles";
 
 const optionsMenu = [
   {

@@ -2,10 +2,9 @@ import React from "react";
 import Head from "next/head";
 import PropTypes from "prop-types";
 // import MUI
-import Button from "@material-ui/core/Button";
+
 // import components
-import withAuth from "../components/util/withAuth";
-import notify from "../components/util/notifier";
+import withAuth from "../views/utils/withAuth";
 
 class Index extends React.Component {
   static propTypes = {

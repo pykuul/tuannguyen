@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const mongoSessionStore = require("connect-mongo");
 
-const auth = require("./util/google");
+const auth = require("./utils/google");
 const api = require("./api");
 const logger = require("./logs");
 const { insertTemplates } = require("./models/EmailTemplate");
@@ -51,7 +51,8 @@ app
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        Secure: true,
+        sameSite: "none",
+        secure: true,
         maxAge: 14 * 24 * 60 * 60 * 1000
       }
     };
@@ -79,6 +80,12 @@ app
 
     // api endpoint handling
     api(server);
+
+    // render read chapter detail to pages
+    server.get("/books/:bookSlug/:chapterSlug", (req, res) => {
+      const { bookSlug, chapterSlug } = req.params;
+      app.render(req, res, "/public/read-chapter", { bookSlug, chapterSlug });
+    });
 
     // this is to forward all the others routes to nextJS handle
     server.get("*", (req, res) => {

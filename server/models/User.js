@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const _ = require("lodash");
-const generateSlug = require("../util/slugify");
+const generateSlug = require("../utils/slugify");
 const logger = require("../logs");
 const { getEmailTemplate } = require("./EmailTemplate");
-const { sendEmail } = require("../util/aws");
+const { sendEmail } = require("../utils/aws");
 
 const { Schema } = mongoose;
 

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const Chapter = require("./Chapter");
-const { generateSlug } = require("../util/slugify");
+const { generateSlug } = require("../utils/slugify");
 
 const bookSchema = new Schema({
   // Book props

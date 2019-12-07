@@ -5,9 +5,9 @@ import Link from "next/link";
 
 import Button from "@material-ui/core/Button";
 
-import notify from "../../components/util/notifier";
-import withAuth from "../../components/util/withAuth";
-import { getBookList } from "../../components/util/api/admin";
+import notify from "../../views/utils/notifier";
+import withAuth from "../../views/utils/withAuth";
+import { getBookList } from "../../utils/api/admin";
 
 const Index = ({ books }) => (
   <div style={{ padding: "10px 45px" }}>

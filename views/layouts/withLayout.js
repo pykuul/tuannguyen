@@ -1,6 +1,6 @@
 import React from "react";
 import CssBaseLine from "@material-ui/core/CssBaseline";
-import Header from "../layouts/Header";
+import Header from "../components/Header";
 
 function withLayout(BaseComponent) {
   class App extends React.createElementComponent {
