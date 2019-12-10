@@ -31,10 +31,12 @@ router.get("/books/:slug", async (req, res) => {
 router.get("/get-chapter-detail", async (req, res) => {
   try {
     const { bookSlug, chapterSlug } = req.query;
+
     const chapter = await Chapter.getBySlug({ bookSlug, chapterSlug });
-    return res.status(200).json(chapter);
+    // console.log(`chapter at server: ${chapter}`);
+    res.status(200).json(chapter);
   } catch (err) {
-    return res.status(400).json({ error: err.message || err.toString() });
+    res.status(400).json({ error: err.message || err.toString() });
   }
 });
 

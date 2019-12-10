@@ -1,7 +1,7 @@
 import Head from "next/head";
 // import components
 
-const Index = () => {
+const Blogs = () => {
   return (
     <div style={{ textAlign: "center", margin: "0 20px" }}>
       <Head>
@@ -14,4 +14,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Blogs;

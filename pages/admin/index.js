@@ -1,13 +1,14 @@
 // default list all the books we have in the database
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
-
+// import MUI
 import Button from "@material-ui/core/Button";
-
-import notify from "../../views/utils/notifier";
-import withAuth from "../../views/utils/withAuth";
-import { getBookList } from "../../utils/api/admin";
+// import components
+import notify from "../../lib/notifier";
+import withAuth from "../../lib/withAuth";
+import { getBookList } from "../../lib/api/admin";
+import sendRequest from "../../lib/sendRequest";
 
 const Index = ({ books }) => (
   <div style={{ padding: "10px 45px" }}>
@@ -43,23 +44,28 @@ Index.propTypes = {
   ).isRequired
 };
 
-class IndexWithData extends Component {
-  state = {
-    books: []
-  };
+const IndexWithData = () => {
+  // define component's state
+  const [books, setBooks] = useState({ books: [] });
 
-  async componentDidMount() {
-    try {
-      const { books } = await getBookList();
-      this.setState({ books });
-    } catch (err) {
-      notify(err);
-    }
-  }
+  // componentDidMount
+  useEffect(() => {
+    const BASE_PATH = "/api/v1/admin";
+    // fetch the list of all books
+    (async function fetchAllBooks() {
+      try {
+        const { books } = await sendRequest(`${BASE_PATH}/books`, {
+          method: "GET"
+        });
+        setBooks({ books });
+      } catch (err) {
+        notify(err);
+      }
+    })();
+  }, []);
 
-  render() {
-    return <Index {...this.state} />;
-  }
-}
+  // rendering
+  return <Index {...books} />;
+};
 
 export default withAuth(IndexWithData, { adminRequired: true });

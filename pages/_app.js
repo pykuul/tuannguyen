@@ -5,10 +5,10 @@ import React from "react";
 import Router from "next/router";
 import NProgress from "nprogress";
 // import styles
-import { theme } from "../views/styled/theme";
+import { theme } from "../lib/styled/theme";
 // import components
-import Header from "../views/components/Header";
-import Notifier from "../views/components/Notifier";
+import Header from "../components/Header";
+import Notifier from "../components/Notifier";
 
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();

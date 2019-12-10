@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const Chapter = require("./Chapter");
+// const Chapter = require("./Chapter");
 const { generateSlug } = require("../utils/slugify");
 
 const bookSchema = new Schema({
@@ -43,17 +43,16 @@ class BookClass {
 
   // find one book by its slug
   static async getBySlug({ slug }) {
-    const bookDoc = await this.findOne({ slug });
-
-    if (!bookDoc) throw new Error("Book not found");
-
-    const book = bookDoc.toObject();
+    const book = await this.findOne({ slug });
+    // console.log(`bookDoc: ${bookDoc}`);
+    if (!book) throw new Error("Book not found");
 
     // get the books chapters
-    book.chapters = (
-      await Chapter.find({ bookId: book._id }, "title slug").sort({ order: 1 })
-    ).map(chapter => chapter.toOject());
-
+    book.chapters = await Chapter.find(
+      { bookId: book._id },
+      "title slug"
+    ).sort({ order: 1 });
+    // console.log(`BOOK_AT_BOOKMODEL: ${book}`);
     return book;
   }
 
@@ -107,3 +106,5 @@ bookSchema.loadClass(BookClass);
 const Book = mongoose.model("Book", bookSchema);
 
 module.exports = Book;
+
+const Chapter = require("./Chapter");

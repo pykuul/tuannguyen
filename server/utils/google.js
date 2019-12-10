@@ -70,9 +70,13 @@ function auth({ ROOT_URL, server }) {
   server.get(
     "/oauth2callback",
     passport.authenticate("google", { failureRedirect: "/login" }),
-    function(req, res) {
-      // Successful authentication, redirect admin.
-      res.redirect("/admin");
+    (req, res) => {
+      // Successful authentication, redirect to proper page.
+      if (req.user && req.user.isAdmin) {
+        res.redirect("/admin");
+      } else {
+        res.redirect("/my-books");
+      }
     }
   );
 

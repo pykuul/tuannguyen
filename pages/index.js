@@ -1,37 +1,33 @@
-import React from "react";
+// import React from "react";
 import Head from "next/head";
 import PropTypes from "prop-types";
 // import MUI
 
 // import components
-import withAuth from "../views/utils/withAuth";
+import withAuth from "../lib/withAuth";
 
-class Index extends React.Component {
-  static propTypes = {
-    user: PropTypes.shape({
-      displayName: PropTypes.string,
-      email: PropTypes.string.isRequired
-    })
-  };
+const Index = ({ user }) => {
+  return (
+    <div style={{ padding: "10px 45px" }}>
+      <Head>
+        <title>Dashboard</title>
+        <meta name="description" content="List of purchased books" />
+      </Head>
+      <p>Dashboard</p>
+      {user && user.email ? <p>Email: {user.email}</p> : null}
+    </div>
+  );
+};
 
-  static defaultProps = {
-    user: null
-  };
+Index.defaultProps = {
+  user: null
+};
 
-  render() {
-    const { user } = this.props;
+Index.propTypes = {
+  user: PropTypes.shape({
+    displayName: PropTypes.string,
+    email: PropTypes.string.isRequired
+  })
+};
 
-    return (
-      <div style={{ padding: "10px 45px" }}>
-        <Head>
-          <title>Dashboard</title>
-          <meta name="description" content="List of purchased books" />
-        </Head>
-        <p>Dashboard</p>
-        {user && user.email ? <p>Email: {user.email}</p> : null}
-      </div>
-    );
-  }
-}
-
-export default withAuth(Index, { loginRequired: true });
+export default withAuth(Index);

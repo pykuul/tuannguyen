@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Book = require("./Book");
+// const Book = require("./Book");
 const { Schema } = mongoose;
 
 // define Chapter's properties
@@ -67,17 +67,20 @@ class ChapterClass {
     const book = await Book.getBySlug({ slug: bookSlug });
 
     if (!book) {
-      throw new Error("Not found");
+      throw new Error("Book not found");
     }
 
     const chapter = await this.findOne({ bookId: book._id, slug: chapterSlug });
 
     if (!chapter) {
-      throw new Error("Not found");
+      throw new Error("Chapter not found");
     }
 
     const chapterObj = chapter.toObject();
     chapterObj.book = book;
+
+    // console.log(`CHAPTER: ${chapterObj.title}`);
+    // console.log(`BOOK: ${chapterObj.book.name}`);
 
     return chapterObj;
   }
@@ -92,3 +95,5 @@ chapterSchema.loadClass(ChapterClass);
 const Chapter = mongoose.model("Chapter", chapterSchema);
 
 module.exports = Chapter;
+
+const Book = require("./Book");
